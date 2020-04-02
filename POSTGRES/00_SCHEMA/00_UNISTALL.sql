@@ -4,8 +4,8 @@
 -- ***************************************************
 
 -- USUARIO DEL APLICATIVO 
--- User: juegohacker_us
+-- User: ownk_us
 
 	
-DROP DATABASE IF exists  "JUEGOHACKER_BD";
-DROP USER IF exists juegohacker_us;
+DROP DATABASE IF exists  "OWNK_BD";
+DROP USER IF exists ownk_us;

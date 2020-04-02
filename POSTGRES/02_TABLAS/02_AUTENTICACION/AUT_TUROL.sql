@@ -1,0 +1,24 @@
+CREATE TABLE AUT_TUROL
+(
+
+UROL_USER			varchar (50) NOT NULL,
+UROL_ROL			varchar (10) NOT NULL
+
+)
+
+WITH (
+   OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+COMMENT ON TABLE AUT_TUROL 
+	IS 'Nombre de la tabla'
+;
+
+COMMENT ON COLUMN AUT_TUROL.UROL_USER
+	IS 'ID del usuario'
+;
+
+COMMENT ON COLUMN AUT_TUROL.UROL_ROL
+	IS 'ID del rol'
+;

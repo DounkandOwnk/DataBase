@@ -1,0 +1,331 @@
+-- INSTRUCCIONES
+-- REEMPLAZAR EL TEXTO _OW_BASE_ CON EL NOMBRE DEL PROYECTO
+
+-- ********************  NOTA IMPORTANTE!!!!  ***********************
+-- *                                                                *
+-- *  POR FAVOR ENVIAR LOS LOGS DE EJECUCION DE ESTE SCRIPT (.LST)  *
+-- *  PARA EFECTOS DE VERIFICACION DEL CAMBIO                       *
+-- *                                                                *
+-- *                                                                *
+-- *                     OWNK S.A.S.                                *
+-- *                                                                *
+-- *                                                                *
+-- ******************************************************************
+
+-- SETUP
+\i SETUP.sql
+-- Dumped from database version 11.1
+-- Dumped by pg_dump version 11.1
+
+SET statement_timeout = 0;
+SET
+SET lock_timeout = 0;
+SET
+SET idle_in_transaction_session_timeout = 0;
+SET
+SET client_encoding = 'UTF8';
+SET
+SET standard_conforming_strings = on;
+SET
+SELECT pg_catalog.set_config('search_path', '', false);
+ set_config 
+------------
+ 
+(1 fila)
+
+SET check_function_bodies = false;
+SET
+SET client_min_messages = warning;
+SET
+SET row_security = off;
+SET
+
+-- @INSTALL_SCHEMA.sql
+\i INSTALL_SCHEMAS.sql
+-- 00_SCHEMA...
+\i 00_SCHEMA/00_INSTALADOR.sql
+-- ***************************************************
+-- **          PROYECTO WEB BASE                    **
+-- **          REV:26\01\2019                       ** 
+-- ***************************************************
+
+-- CREANDO USER
+\i 00_SCHEMA/00_UNISTALL.sql
+-- ***************************************************
+-- **          PROYECTO WEB BASE                    **
+-- **          REV:26\01\2019                       ** 
+-- ***************************************************
+
+-- USUARIO DEL APLICATIVO 
+-- User: ownk_us
+
+	
+DROP DATABASE IF exists  "OWNK_BD";
+DROP DATABASE
+DROP USER IF exists ownk_us;
+DROP ROLE
+
+-- CREANDO USER
+\i 00_SCHEMA/01_USER.sql
+-- ***************************************************
+-- **          PROYECTO WEB BASE                    **
+-- **          REV:26\01\2019                       ** 
+-- ***************************************************
+
+-- USUARIO DEL APLICATIVO 
+-- User: ownk_us
+
+CREATE USER ownk_us WITH
+  LOGIN
+  ENCRYPTED PASSWORD 'ownk_us'
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+CREATE ROLE
+
+
+-- CREANDO SCHEMAS
+\i 00_SCHEMA/02_SCHEMAS.sql
+-- ***************************************************
+-- **          PROYECTO WEB BASE                    **
+-- **          REV:26\01\2019                       ** 
+-- ***************************************************
+
+--
+-- PostgreSQL database dump
+--
+
+-- Database: JUEGOHACKER_BD
+
+CREATE DATABASE "OWNK_BD"
+    WITH 
+    OWNER = ownk_us    
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+CREATE DATABASE
+	
+	
+grant all privileges on database "OWNK_BD" TO ownk_us;
+GRANT
+
+--Se ajusta path para creacion en el schema
+ALTER DATABASE "OWNK_BD" SET search_path TO ownk_schema,public;
+ALTER DATABASE
+SET search_path TO ownk_schema,public;
+SET
+
+	
+-- Cambio de base de datos
+\c "OWNK_BD" 
+Ahora está conectado a la base de datos «OWNK_BD» con el usuario «postgres».
+
+
+
+create extension pgcrypto;
+CREATE EXTENSION
+create extension "uuid-ossp";
+CREATE EXTENSION
+create extension pg_trgm;
+CREATE EXTENSION
+
+--
+-- Name: ownk_ext; Type: SCHEMA; Schema: -; Owner: ownk_us
+--
+
+CREATE SCHEMA ownk_ext;
+CREATE SCHEMA
+
+
+ALTER SCHEMA ownk_ext OWNER TO ownk_us;
+ALTER SCHEMA
+
+
+CREATE SCHEMA ownk_schema;
+CREATE SCHEMA
+
+ALTER SCHEMA ownk_schema OWNER TO ownk_us;
+ALTER SCHEMA
+
+
+
+
+
+-- @INSTALL_OBJECTS.sql
+
+\i INSTALL_OBJECTS.sql
+-- INSTALL OBJECTS...
+
+\i 01_SECUENCIAS/INSTALL_SECUENCIAS.sql
+\i 01_SECUENCIAS/02_AUTENTICACION/INSTALL.sql
+\i 02_TABLAS/INSTALL_TABLAS.sql
+\i 02_TABLAS/02_AUTENTICACION/INSTALL.sql
+\i 02_TABLAS/02_AUTENTICACION/AUT_TUSER.sql
+CREATE TABLE AUT_TUSER
+(
+
+USER_USER				varchar (50) NOT NULL,
+USER_NAME				varchar (10) NOT NULL,
+USER_AGE				integer NOT NULL,
+USER_POSITION			varchar (10) NOT NULL
+
+)
+
+WITH (
+   OIDS = FALSE
+)
+TABLESPACE pg_default;
+CREATE TABLE
+
+ALTER TABLE ONLY AUT_TUSER ADD CONSTRAINT PK_AUT_USER
+    PRIMARY KEY (USER_USER)
+;
+ALTER TABLE
+
+COMMENT ON TABLE AUT_TUSER 
+	IS 'Nombre de la tabla'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TUSER.USER_NAME
+	IS 'Nombre del usuario'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TUSER.USER_AGE
+	IS 'Edad del usuario'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TUSER.USER_POSITION
+	IS 'Cargo del usuario'
+;
+COMMENT
+\i 02_TABLAS/02_AUTENTICACION/AUT_TROL.sql
+CREATE TABLE AUT_TROL
+(
+
+ROL_ROL				varchar (10) NOT NULL,
+ROL_DESCRI			varchar (100) NOT NULL
+
+)
+
+WITH (
+   OIDS = FALSE
+)
+TABLESPACE pg_default;
+CREATE TABLE
+
+ALTER TABLE ONLY AUT_TROL ADD CONSTRAINT PK_AUT_ROL
+    PRIMARY KEY (ROL_ROL)
+;
+ALTER TABLE
+
+COMMENT ON TABLE AUT_TROL 
+	IS 'Nombre de la tabla'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TROL.ROL_ROL
+	IS 'ID del rol'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TROL.ROL_DESCRI
+	IS 'DescripciÃ³n del rol'
+;
+COMMENT
+\i 02_TABLAS/02_AUTENTICACION/AUT_TUROL.sql
+CREATE TABLE AUT_TUROL
+(
+
+UROL_USER			varchar (50) NOT NULL,
+UROL_ROL			varchar (10) NOT NULL
+
+)
+
+WITH (
+   OIDS = FALSE
+)
+TABLESPACE pg_default;
+CREATE TABLE
+
+COMMENT ON TABLE AUT_TUROL 
+	IS 'Nombre de la tabla'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TUROL.UROL_USER
+	IS 'ID del usuario'
+;
+COMMENT
+
+COMMENT ON COLUMN AUT_TUROL.UROL_ROL
+	IS 'ID del rol'
+;
+COMMENT
+\i 03_FOREIGN_KEY/INSTALL_FOREIGN.sql
+\i 03_FOREIGN_KEY/02_AUTENTICACION/INSTALL.sql
+\i 03_FOREIGN_KEY/02_AUTENTICACION/AUT_TUROL_FK.sql
+ALTER TABLE ONLY AUT_TUROL ADD CONSTRAINT FK_AUT_TUROL_AUT_TUSER
+	FOREIGN KEY (UROL_USER) REFERENCES AUT_TUSER (USER_USER)
+;
+ALTER TABLE
+
+ALTER TABLE ONLY AUT_TUROL ADD CONSTRAINT FK_AUT_TUROL_AUT_TROL
+	FOREIGN KEY (UROL_ROL) REFERENCES AUT_TROL (ROL_ROL)
+;
+ALTER TABLE
+\i 04_TIPOS/INSTALL_TIPOS.sql
+\i 04_TIPOS/02_AUTENTICACION/INSTALL.sql
+\i 05_FUNCIONES/INSTALL_FUNCIONES.sql
+\i 05_FUNCIONES/02_AUTENTICACION/INSTALL.sql
+\i 06_DATOS/INSTALL_DATOS.sql
+\i 06_DATOS/02_AUTENTICACION/INSTALL.sql
+\i 06_DATOS/02_AUTENTICACION/01_IS_AUT_TUSER.sql
+INSERT INTO AUT_TUSER (USER_USER, USER_NAME, USER_AGE, USER_POSITION) 
+	VALUES ('1','Antonio', 30, 'Contador')
+;
+INSERT 0 1
+\i 06_DATOS/02_AUTENTICACION/02_IS_AUT_TROL.sql
+INSERT INTO AUT_TROL (ROL_ROL, ROL_DESCRI) 
+	VALUES ('ADMIN','Administrador')
+;
+INSERT 0 1
+\i 06_DATOS/02_AUTENTICACION/03_IS_AUT_TUROL.sql
+INSERT INTO AUT_TUROL (UROL_USER, UROL_ROL) 
+	VALUES ('1','ADMIN')
+;
+INSERT 0 1
+
+
+-- @INSTALL_PRIVILEGES.sql
+\i INSTALL_PRIVILEGES.sql
+grant all privileges on all tables in schema ownk_schema to ownk_us;
+GRANT
+grant all privileges on all sequences in schema ownk_schema to ownk_us;
+GRANT
+grant all privileges on all functions in schema ownk_schema to ownk_us; 
+GRANT
+
+ALTER ROLE ownk_us SUPERUSER;	
+ALTER ROLE
+
+
+
+
+
+-- Si la ejecuciÃ³n del script no presenta ningÃºn problema por favor haga 
+-- COMMIT, de lo contrario haga ROLLBACK y comuniquese con OWNK S.A.S.
+--
+-- ********************  NOTA IMPORTANTE!!!!  ***********************
+-- *                                                                *
+-- *  POR FAVOR ENVIAR EL LOG DE EJECUCION DE ESTE SCRIPT (*.LST)   *
+-- *  PARA EFECTOS DE VERIFICACION DEL CAMBIO                       *
+-- *  AL CORREO proyectos@OWNK.CO                                   *
+-- *                                                                *
+-- *                        OWNK S.A.S                              *
+-- *                                                                *
+-- ******************************************************************

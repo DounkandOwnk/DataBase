@@ -1,0 +1,3 @@
+INSERT INTO AUT_TROL (ROL_ROL, ROL_DESCRI) 
+	VALUES ('ADMIN','Administrador')
+;

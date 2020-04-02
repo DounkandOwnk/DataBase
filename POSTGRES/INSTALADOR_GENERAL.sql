@@ -1,4 +1,4 @@
--- INSTRUCCIONES
+﻿-- INSTRUCCIONES
 -- REEMPLAZAR EL TEXTO _OW_BASE_ CON EL NOMBRE DEL PROYECTO
 
 -- ********************  NOTA IMPORTANTE!!!!  ***********************
@@ -19,6 +19,7 @@
 \i INSTALL_SCHEMAS.sql
 
 -- @INSTALL_OBJECTS.sql
+
 \i INSTALL_OBJECTS.sql
 
 -- @INSTALL_PRIVILEGES.sql
