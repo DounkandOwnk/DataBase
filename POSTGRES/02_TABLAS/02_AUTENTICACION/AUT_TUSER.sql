@@ -2,9 +2,9 @@ CREATE TABLE AUT_TUSER
 (
 
 USER_USER				varchar (50) NOT NULL,
-USER_NAME				varchar (10) NOT NULL,
+USER_NAME				varchar (100) NOT NULL,
 USER_AGE				integer NOT NULL,
-USER_POSITION			varchar (10) NOT NULL
+USER_POSITION			varchar (100) NOT NULL
 
 )
 
